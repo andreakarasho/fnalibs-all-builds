@@ -46,8 +46,13 @@ jobs:
      
      - name: get SDL2
        run: |
-         sudo apt-get update -y
-         sudo apt install libsdl2-dev libsdl2-2.0-0 -y
+         git clone --recursive https://github.com/libsdl-org/SDL.git
+         cd SDL
+         mkdir build
+         cd build
+         ../configure
+         make
+         sudo make install
      
      - name: get FNA3D
        run: git clone --recursive https://github.com/andreakarasho/FNA3D
