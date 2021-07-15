@@ -4,15 +4,15 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 * * * *
-    
+env:
+  sdl_version: "2.0.14"   
+
+
 
 jobs:
     
   win-x64:
     runs-on: windows-latest
-    env:
-        sdl_version: "2.0.14"
-        
     steps:
       - uses: actions/checkout@v2
             
@@ -38,4 +38,26 @@ jobs:
           cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -DSDL2_INCLUDE_DIRS="${{ github.workspace }}\SDL2-${{ env.sdl_version }}\include" -DSDL2_LIBRARIES="${{ github.workspace }}\SDL2-${{ env.sdl_version }}\lib\x64\SDL2.lib;${{ github.workspace }}\SDL2-${{ env.sdl_version }}\lib\x64\SDL2main.lib" -B build_shared 
           cmake --build build_shared/ --config Release
 
+
+  linux-x64:
+    runs-on: ubuntu-latest
+    steps:
+     - uses: actions/checkout@v2
+     
+     - name: get FNA3D
+       run: git clone --recursive https://github.com/andreakarasho/FNA3D
+     
+     - name: build FNA3D STATIC
+       run: |
+         cd FNA3D
+         mkdir build_static
+         cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON -b build_static
+         cmake --build build_static/ --config Release
+         
+     - name: build FNA3D SHARED
+       run: |
+         cd FNA3D
+         mkdir build_shared
+         cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -b build_shared
+         cmake --build build_shared/ --config Release
 
