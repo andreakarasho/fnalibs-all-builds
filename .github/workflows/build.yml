@@ -84,7 +84,7 @@ jobs:
          cmake --build build_shared/ --config Release
          
      - name: Create package
-       run: zip -r -D linux-x64-release.zip ./FNA3D/build_shared/libFNA3D.so ./FNA3D/build_static/libFNA3D.a
+       run: zip -j linux-x64-release.zip ./FNA3D/build_shared/libFNA3D.so ./FNA3D/build_static/libFNA3D.a
           
      - name: Upload
        uses: svenstaro/upload-release-action@v2
@@ -129,7 +129,7 @@ jobs:
          cmake --build build_shared/ --config Release
          
      - name: Create package
-       run: zip -r -D osx-x64-release.zip ./FNA3D/build_shared/libFNA3D.dylib ./FNA3D/build_static/libFNA3D.a
+       run: zip -j osx-x64-release.zip ./FNA3D/build_shared/libFNA3D.dylib ./FNA3D/build_static/libFNA3D.a
           
      - name: Upload
        uses: svenstaro/upload-release-action@v2
