@@ -4,18 +4,21 @@ on:
   workflow_dispatch:
   schedule:
     - cron: 0 * * * *
+    
 
 jobs:
-
+    
   win-x64:
     runs-on: windows-latest
-
+    env:
+        sdl_version: "2.0.14"
+        
     steps:
       - uses: actions/checkout@v2
       
       - name: get SDL2
         run: |
-          curl https://www.libsdl.org/release/SDL2-devel-2.0.14-VC.zip -o SDL2.zip
+          curl https://www.libsdl.org/release/SDL2-devel-${{ env.sdl_version }}-VC.zip -o SDL2.zip
           7z x SDL2.zip
 
       - name: get FNA3D
@@ -25,14 +28,14 @@ jobs:
         run: |
           cd FNA3D
           mkdir build
-          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON -DSDL2_INCLUDE_DIRS="$GITHUB_WORKSPACE\SDL2\include" -DSDL2_LIBRARIES="$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2.lib;$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2main.lib" -B build 
+          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON -DSDL2_INCLUDE_DIRS="$GITHUB_WORKSPACE\SDL2-${{ env.sdl_version }}\include" -DSDL2_LIBRARIES="$GITHUB_WORKSPACE\SDL2-${{ env.sdl_version }}\lib\x64\SDL2.lib;$GITHUB_WORKSPACE\SDL2-${{ env.sdl_version }}\lib\x64\SDL2main.lib" -B build 
           cmake --build build/ --config Release
           
       - name: build FNA3D SHARED
         run: |
           cd FNA3D
           mkdir build
-          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF  -DSDL2_INCLUDE_DIRS="$GITHUB_WORKSPACE\SDL2\include" -DSDL2_LIBRARIES="$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2.lib;$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2main.lib" -B build 
+          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -DSDL2_INCLUDE_DIRS="$GITHUB_WORKSPACE\SDL2-${{ env.sdl_version }}\include" -DSDL2_LIBRARIES="$GITHUB_WORKSPACE\SDL2-${{ env.sdl_version }}\lib\x64\SDL2.lib;$GITHUB_WORKSPACE\SDL2-${{ env.sdl_version }}\lib\x64\SDL2main.lib" -B build 
           cmake --build build/ --config Release
 
 
