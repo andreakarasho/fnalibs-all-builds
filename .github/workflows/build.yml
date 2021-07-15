@@ -16,6 +16,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
+      - name: PRINT WORKSPACE
+        run: echo $GITHUB_WORKSPACE
+      
       - name: get SDL2
         run: |
           curl https://www.libsdl.org/release/SDL2-devel-${{ env.sdl_version }}-VC.zip -o SDL2.zip
