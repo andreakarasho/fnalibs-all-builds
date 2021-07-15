@@ -23,14 +23,14 @@ jobs:
         run: |
           cd FNA3D
           mkdir build
-          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON
+          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON -B build
           cmake --build build/ --config Release
           
       - name: build FNA3D SHARED
         run: |
           cd FNA3D
           mkdir build
-          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF
+          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -B build
           cmake --build build/ --config Release
 
 
