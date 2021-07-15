@@ -39,7 +39,7 @@ jobs:
           cmake --build build_shared/ --config Release
           
       - name: Create package
-        run: 7z a win-x64-release.zip ./FNA3D/build_shared/FNA3D.dll ./FNA3D/build_static/FNA3D.lib
+        run: 7z a win-x64-release.zip /FNA3D/build_shared/FNA3D.dll /FNA3D/build_static/FNA3D.lib
           
       - name: Upload
         uses: svenstaro/upload-release-action@v2
