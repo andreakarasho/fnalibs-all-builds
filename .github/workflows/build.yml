@@ -37,6 +37,18 @@ jobs:
           mkdir build_shared
           cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -DSDL2_INCLUDE_DIRS="${{ github.workspace }}\SDL2-${{ env.sdl_version }}\include" -DSDL2_LIBRARIES="${{ github.workspace }}\SDL2-${{ env.sdl_version }}\lib\x64\SDL2.lib;${{ github.workspace }}\SDL2-${{ env.sdl_version }}\lib\x64\SDL2main.lib" -B build_shared 
           cmake --build build_shared/ --config Release
+          
+      - name: Create package
+        run: 7z a win-x64-release.zip ./build_shared/FNA3D.dll ./build_static/FNA3D.lib
+          
+      - name: Upload
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: win-x64-release.zip
+          asset_name: win-x64-release.zip
+          tag: ${{ github.ref }}
+          overwrite: true
 
 
   linux-x64:
@@ -70,6 +82,18 @@ jobs:
          mkdir build_shared
          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -B build_shared
          cmake --build build_shared/ --config Release
+         
+     - name: Create package
+       run: zip linux-x64-release.zip ./build_shared/libFNA3D.so ./build_static/libFNA3D.a
+          
+     - name: Upload
+       uses: svenstaro/upload-release-action@v2
+       with:
+         repo_token: ${{ secrets.GITHUB_TOKEN }}
+         file: linux-x64-release.zip
+         asset_name: linux-x64-release.zip
+         tag: ${{ github.ref }}
+         overwrite: true
 
 
   macOS:
@@ -103,3 +127,15 @@ jobs:
          mkdir build_shared
          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -B build_shared
          cmake --build build_shared/ --config Release
+         
+     - name: Create package
+       run: zip osx-x64-release.zip ./build_shared/libFNA3D.dylib ./build_static/libFNA3D.a
+          
+     - name: Upload
+       uses: svenstaro/upload-release-action@v2
+       with:
+         repo_token: ${{ secrets.GITHUB_TOKEN }}
+         file: osx-x64-release.zip
+         asset_name: osx-x64-release.zip
+         tag: ${{ github.ref }}
+         overwrite: true
