@@ -23,14 +23,14 @@ jobs:
         run: |
           cd FNA3D
           mkdir build
-          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON -DSDL2_INCLUDE_DIRS="${{ GITHUB_WORKSPACE }}\SDL2\include" -DSDL2_LIBRARIES="${{ GITHUB_WORKSPACE }}\SDL2\lib\x64\SDL2.lib;${{ GITHUB_WORKSPACE }}\SDL2\lib\x64\SDL2main.lib" -B build 
+          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON -DSDL2_INCLUDE_DIRS="$GITHUB_WORKSPACE\SDL2\include" -DSDL2_LIBRARIES="$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2.lib;$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2main.lib" -B build 
           cmake --build build/ --config Release
           
       - name: build FNA3D SHARED
         run: |
           cd FNA3D
           mkdir build
-          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -DSDL2_INCLUDE_DIRS="${{ GITHUB_WORKSPACE }}\SDL2\include" -DSDL2_LIBRARIES="${{ GITHUB_WORKSPACE }}\SDL2\lib\x64\SDL2.lib;${{ GITHUB_WORKSPACE }}\SDL2\lib\x64\SDL2main.lib" -B build 
+          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF  -DSDL2_INCLUDE_DIRS="$GITHUB_WORKSPACE\SDL2\include" -DSDL2_LIBRARIES="$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2.lib;$GITHUB_WORKSPACE\SDL2\lib\x64\SDL2main.lib" -B build 
           cmake --build build/ --config Release
 
 
