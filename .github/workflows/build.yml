@@ -71,3 +71,35 @@ jobs:
          cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -B build_shared
          cmake --build build_shared/ --config Release
 
+
+  macOS:
+    runs-on: macos-latest
+    steps:
+     - uses: actions/checkout@v2
+     
+     - name: get SDL2
+       run: |
+         git clone --recursive https://github.com/libsdl-org/SDL.git
+         cd SDL
+         mkdir build
+         cd build
+         ../configure
+         make
+         sudo make install
+     
+     - name: get FNA3D
+       run: git clone --recursive https://github.com/andreakarasho/FNA3D
+     
+     - name: build FNA3D STATIC
+       run: |
+         cd FNA3D
+         mkdir build_static
+         cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=ON -B build_static
+         cmake --build build_static/ --config Release
+         
+     - name: build FNA3D SHARED
+       run: |
+         cd FNA3D
+         mkdir build_shared
+         cmake -DCMAKE_BUILD_TYPE=Release -DFNA3D_STATIC=OFF -B build_shared
+         cmake --build build_shared/ --config Release
