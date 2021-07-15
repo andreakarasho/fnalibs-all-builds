@@ -44,6 +44,11 @@ jobs:
     steps:
      - uses: actions/checkout@v2
      
+     - name: get SDL2
+       run: |
+         sudo apt-get update -y
+         sudo apt-get install -y libsdl2-dev
+     
      - name: get FNA3D
        run: git clone --recursive https://github.com/andreakarasho/FNA3D
      
