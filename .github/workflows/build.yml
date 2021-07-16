@@ -3,7 +3,7 @@ name: build
 on:
   workflow_dispatch:
   schedule:
-    - cron: 0 * * * *
+    - cron: "0 6 * * *"
 env:
   sdl_version: "2.0.14"   
 
